@@ -1,19 +1,32 @@
 const canvas = document.getElementById('mycanvas');
 const ctx = canvas.getContext('2d');
-const scl = 4;
+const scl = 40;
+
 const ws = canvas.width/scl;
 const hs = canvas.height/scl;
 
 ctx.scale(scl, scl);
 
 let grid = []
-function initGrid(rows, cols) {	
-	for(let i = 0; i < ws; i++) {
+function initGrid() {	
+	/*for(let i = 0; i < ws; i++) {
 		grid[i] = [];
 		for(let j = 0; j < hs; j++) {
 			grid[i][j] = +(Math.random() < 0.05)
 		}
-	}
+	}*/
+	grid = [
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,1,0,0,0,0,0],
+		[0,0,1,0,1,0,0,0,0,0],
+		[0,0,0,1,1,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+	]
 }
 
 function inRange(p, s) {
@@ -43,11 +56,13 @@ function updateGrid() {
 }
 
 function renderGrid() {
-	for(let i = 0; i < ws; i++) {
-		for(let j = 0; j < hs; j++) {
-			if(grid[i][j]) ctx.fillStyle = '#000';
-			else ctx.fillStyle = '#fff';	
-			ctx.fillRect(i, j, 1, 1)
+	for(let y = 0; y < hs; y++) {
+		for(let x = 0; x < ws; x++) {
+			ctx.fillStyle = '#fff';
+			if(grid[y][x]) {
+				ctx.fillStyle = '#000';
+			} 
+			ctx.fillRect(x, y, 1, 1);
 		}
 	}
 }
@@ -65,5 +80,4 @@ function showGame(time) {
 	window.requestAnimationFrame(showGame);
 }
 window.requestAnimationFrame(showGame);
-
 
