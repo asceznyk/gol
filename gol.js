@@ -1,6 +1,6 @@
 const canvas = document.getElementById('mycanvas');
 const ctx = canvas.getContext('2d');
-const scl = 8;
+const scl = 4;
 const ws = canvas.width/scl;
 const hs = canvas.height/scl;
 
@@ -11,13 +11,13 @@ function initGrid(rows, cols) {
 	for(let i = 0; i < ws; i++) {
 		grid[i] = [];
 		for(let j = 0; j < hs; j++) {
-			grid[i][j] = +(Math.random() < 0.2)
+			grid[i][j] = +(Math.random() < 0.05)
 		}
 	}
 }
 
 function inRange(p, s) {
-	return (p+s >= 0 && p+s <= scl-1)
+	return (p+s >= 0 && p+s <= ws-1)
 }
 
 function gameOfLife(r,c) {
@@ -54,6 +54,7 @@ function renderGrid() {
 
 
 initGrid()
+renderGrid()
 let start = 0;
 function showGame(time) {
 	if((time-start) >= 100) {
@@ -62,7 +63,7 @@ function showGame(time) {
 		renderGrid()
 	}
 	window.requestAnimationFrame(showGame);
-} 
+}
 window.requestAnimationFrame(showGame);
 
 
