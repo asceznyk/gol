@@ -38,10 +38,12 @@ function gameOfLife(r,c) {
 	for(let i = -1; i < 2; i++) {
 		for(let j = -1; j < 2; j++) {
 			if(inRange(r,i) && inRange(c,j)) {
-				count += grid[r+i][c+j];
+				count += (i == 0 && j == 0) ? 0 : grid[r+i][c+j];
 			} 
 		}
 	}
+
+	console.log(count)
 
 	if(count < 2 || count > 3) grid[r][c] = 0;
 	if(count == 3) grid[r][c] = 1;	
@@ -50,7 +52,7 @@ function gameOfLife(r,c) {
 function updateGrid() {
 	for(let i = 0; i < ws; i++) {
 		for(let j = 0; j < hs; j++) {
-			gameOfLife(i, j);
+				gameOfLife(i, j);
 		}
 	}
 }
@@ -70,7 +72,7 @@ function renderGrid() {
 
 initGrid()
 renderGrid()
-let start = 0;
+/*let start = 0;
 function showGame(time) {
 	if((time-start) >= 100) {
 		start = time
@@ -79,5 +81,5 @@ function showGame(time) {
 	}
 	window.requestAnimationFrame(showGame);
 }
-window.requestAnimationFrame(showGame);
+window.requestAnimationFrame(showGame);*/
 
