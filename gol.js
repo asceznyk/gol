@@ -1,6 +1,6 @@
 const canvas = document.getElementById('mycanvas');
 const ctx = canvas.getContext('2d');
-const scl = 40;
+const scl = 8;
 
 const ws = canvas.width/scl;
 const hs = canvas.height/scl;
@@ -9,24 +9,12 @@ ctx.scale(scl, scl);
 
 let grid = []
 function initGrid() {	
-	/*for(let i = 0; i < ws; i++) {
+	for(let i = 0; i < ws; i++) {
 		grid[i] = [];
 		for(let j = 0; j < hs; j++) {
-			grid[i][j] = +(Math.random() < 0.05)
+			grid[i][j] = +(Math.random() < 0.15)
 		}
-	}*/
-	grid = [
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,1,0,0,0,0,0],
-		[0,0,1,0,1,0,0,0,0,0],
-		[0,0,0,1,1,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-	]
+	}
 }
 
 function inRange(p, s) {
@@ -43,25 +31,28 @@ function gameOfLife(r,c) {
 		}
 	}
 
-	console.log(count)
-
-	if(count < 2 || count > 3) grid[r][c] = 0;
-	if(count == 3) grid[r][c] = 1;	
+	if(count < 2 || count > 3) {
+		refGrid[r][c] = 0;
+	} else if(count == 3){ 
+		refGrid[r][c] = 1;	
+	}
 }
 
 function updateGrid() {
 	for(let i = 0; i < ws; i++) {
 		for(let j = 0; j < hs; j++) {
-				gameOfLife(i, j);
+			gameOfLife(i, j);
 		}
 	}
+
+	grid = JSON.parse(JSON.stringify(refGrid));
 }
 
 function renderGrid() {
 	for(let y = 0; y < hs; y++) {
 		for(let x = 0; x < ws; x++) {
 			ctx.fillStyle = '#fff';
-			if(grid[y][x]) {
+			if(refGrid[y][x]) {
 				ctx.fillStyle = '#000';
 			} 
 			ctx.fillRect(x, y, 1, 1);
@@ -71,15 +62,16 @@ function renderGrid() {
 
 
 initGrid()
+let refGrid = JSON.parse(JSON.stringify(grid))
 renderGrid()
-/*let start = 0;
-function showGame(time) {
+let start = 0;
+function timeStep(time) {
 	if((time-start) >= 100) {
 		start = time
 		updateGrid()
 		renderGrid()
 	}
-	window.requestAnimationFrame(showGame);
+	window.requestAnimationFrame(timeStep);
 }
-window.requestAnimationFrame(showGame);*/
+window.requestAnimationFrame(timeStep);
 
