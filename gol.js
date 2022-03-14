@@ -1,3 +1,5 @@
+//this version is corner constrained so take it lightly
+
 const canvas = document.getElementById('mycanvas');
 const ctx = canvas.getContext('2d');
 const scl = 8;
